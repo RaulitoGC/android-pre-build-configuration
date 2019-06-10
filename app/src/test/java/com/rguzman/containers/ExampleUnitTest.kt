@@ -24,4 +24,9 @@ class ExampleUnitTest {
     fun product_test2_isCorrect() {
         assertEquals(6, 3 * 2)
     }
+
+    @Test
+    fun product_test3_isCorrect() {
+        assertEquals(9, 3 * 3)
+    }
 }
