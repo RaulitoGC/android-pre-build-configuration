@@ -1,1 +1,1 @@
-# Android-docker-Jenkins
+# Setup Configuration before compile the project
