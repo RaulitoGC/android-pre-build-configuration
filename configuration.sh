@@ -32,3 +32,37 @@ do
 	esac
 done
 
+cd android-modular-configuration/app/src/main/res/values/
+
+tempFile="color-temp.xml"
+
+IFS=$'\n'
+file=colors.xml
+
+for line in `cat $file`
+do
+  	case $line in
+	   	*colorPrimaryDark*)
+	      	echo "<color name=\"colorPrimaryDark\">$colorPrimaryDark</color>" >> $tempFile
+	      	;;
+      	*colorPrimary*)
+	      	echo "<color name=\"colorPrimary\">$colorPrimary</color>" >> $tempFile
+	      	;;
+      	*colorAccent*)
+	      	echo "<color name=\"colorAccent\">$colorAccent</color>" >> $tempFile
+	      	;;
+  		*)
+ 			echo $line >> $tempFile
+     	;;
+	esac
+done
+
+rm $file
+mv $tempFile $file
+
+cd ../../../../../
+./gradlew assembleDebug
+
+
+
+
