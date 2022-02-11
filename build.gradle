@@ -1,8 +1,8 @@
 apply from: 'dependencies.gradle'
 
 buildscript {
-    ext.androidGradlePluginVersion = '7.0.4'
-    ext.kotlinVersion = "1.5.31"
+    ext.androidGradlePluginVersion = '7.1.1'
+    ext.kotlinVersion = "1.6.10"
     ext.navigationComponentVersion = "2.3.0"
 
     repositories {
