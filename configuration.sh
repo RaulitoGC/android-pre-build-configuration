@@ -1,68 +1,12 @@
-# !/bin/bash
+#!/bin/bash
 
-colorPrimaryKey=""
+# Location of resource file to be replaced
+LOCAL_COLOR_RESOURCE_PATH='app/src/main/res/values/'
 
-response=`curl -s -d "clientId=client-id-abcd" -X POST https://private-a014d-singlelogin.apiary-mock.com/client/configuration`
+# Getting color resources from Remote Endpoint
+REMOTE_COLOR_RESOURCES_NAME='colors.xml'
+URL='https://gist.githubusercontent.com/RaulitoGC/ab8141159523baaf45a739a666e5d791/raw/980680073b91fe3370b1efbe3d25237d8db1b4b0/android-color-configuration.xml'
+curl "$URL" --output $REMOTE_COLOR_RESOURCES_NAME
 
-IFS=','
-array=( $response )
-
-for value in "${array[@]}"
-do
-	#echo $value
-	case $value in
-	   *colorPrimaryDark*)
-	      	temp=${value#*:}
-	      	colorPrimaryDark="${temp//\"}"
-	      	;;
-	   *colorPrimary*)
-	      	temp=${value#*:}
-	      	colorPrimary="${temp//\"}"
-	      	;;
-	   *colorAccent*)
-	      	temp=${value#*:}
-	      	colorAccent="${temp//\"}"
-	      	;;
-		*logo*)
-	      	logo=${value#*:}
-	      	;;
-	   *)
-	 		echo "$value is unknown"
-	     	;;
-	esac
-done
-
-cd android-modular-configuration/app/src/main/res/values/
-
-tempFile="color-temp.xml"
-
-IFS=$'\n'
-file=colors.xml
-
-for line in `cat $file`
-do
-  	case $line in
-	   	*colorPrimaryDark*)
-	      	echo "<color name=\"colorPrimaryDark\">$colorPrimaryDark</color>" >> $tempFile
-	      	;;
-      	*colorPrimary*)
-	      	echo "<color name=\"colorPrimary\">$colorPrimary</color>" >> $tempFile
-	      	;;
-      	*colorAccent*)
-	      	echo "<color name=\"colorAccent\">$colorAccent</color>" >> $tempFile
-	      	;;
-  		*)
- 			echo $line >> $tempFile
-     	;;
-	esac
-done
-
-rm $file
-mv $tempFile $file
-
-cd ../../../../../
-./gradlew assembleDebug
-
-
-
-
+# Move and replace the current local colors file for the remote one
+mv -f $REMOTE_COLOR_RESOURCES_NAME $LOCAL_COLOR_RESOURCE_PATH
