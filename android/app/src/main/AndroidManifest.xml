@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:dist="http://schemas.android.com/apk/distribution"
-          package="com.rguzman.containers">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.rguzman.containers">
 
     <dist:module dist:instant="true"/>
+
+    <uses-permission android:name="android.permission.INSTALL_GRANT_RUNTIME_PERMISSIONS"
+        tools:ignore="ProtectedPermissions" />
 
     <application
             android:allowBackup="true"
@@ -12,7 +16,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
