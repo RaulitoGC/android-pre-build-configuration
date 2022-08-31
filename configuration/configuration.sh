@@ -1,11 +1,8 @@
 #!/bin/bash
 
-echo ${BASH_VERSION}
 # Getting color resources from Remote Endpoint
 URL='https://gist.githubusercontent.com/RaulitoGC/dba916a37a0e2299ce0b2af16692881e/raw/5f6d24fa5ebc177c080f414676a5d37741bb4b00/android-color-configuration.json'
 RESPONSE=$(curl "$URL")
-
-echo $RESPONSE
 
 REMOTE_COLOR_KEYS=('"colorPrimary"' '"colorPrimaryDark"' '"colorAccent"' '"imageColor"')
 SIZE=${#REMOTE_COLOR_KEYS[@]}
@@ -22,8 +19,7 @@ function replaceValues {
 }
 
 # Parsing the json from network to our colors (colorPrimary, colorPrimaryDark and colorAccent)
-for((i=0; i < $SIZE; i++))
-do
+for((i=0; i < $SIZE; i++)); do
   LOCAL_COLOR_VALUES+=($(getColorValue ${REMOTE_COLOR_KEYS[$i]}))
 done
 
@@ -39,8 +35,7 @@ cp 'android-colors-format.xml' 'android-output/'
 mv android-output/android-colors-format.xml android-output/colors.xml
 
 #Replace values from network to our local file using keys
-for((i=0; i < $SIZE; i++))
-do
+for((i=0; i < $SIZE; i++)); do
   replaceValues ${LOCAL_COLOR_KEYS[$i]} ${LOCAL_COLOR_VALUES[$i]} android-output/colors.xml
 done
 
@@ -72,8 +67,8 @@ for i in "${!IOS_FOLDERS[@]}"; do
   mkdir -p ios-output/${IOS_FOLDERS[$i]}
 done
 
-for((i=0; i < $SIZE; i++))
-do
+for((i=0; i < $SIZE; i++)); do
+
     IOS_HEX_COLOR_VALUES=()
 
     IOS_HEX_COLOR_VALUES+=(${LOCAL_COLOR_VALUES[$i]:1:2})
